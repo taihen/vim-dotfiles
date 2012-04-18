@@ -1,0 +1,136 @@
+.. raw:: html
+
+    <style> .red {color:red} </style>
+
+.. footer::
+
+    .. class:: right
+
+    *###Page###*
+
+
+.. raw:: pdf
+
+    Transition Dissolve 1 90
+
+=============
+Up in the sky
+=============
+
+.. class:: right
+
+*RIPE NCC TS Lab Environment*
+
+.. class:: right
+
+*Andrzej Wolski*
+
+.. raw:: pdf
+
+    PageBreak regularPage
+
+.. contents:: `Agenda`
+    :depth: 1
+    :class: thin
+
+Goal
+----------------
+
+- get hands on experience
+
+Requirements
+------------
+
+- modular building blocks
+- open source components
+- replicable
+- web based
+- easy to pick up
+- no additional load for Trainers
+
+Phases
+------
+
+- virtual with AWS
+- virtual with a second cloud provider
+- local
+- physical
+
+Building blocks ( infrastructure )
+----------------------------------
+
+- EC2 ( *compute* )
+- S3 ( *storage* )
+- VPC ( *network* )
+
+.. image:: images/aws.png
+    :align: right
+    :width: 1000
+
+Building blocks ( software )
+----------------------------
+
+- python ( *high level programming language* )
+- boto ( *AWS API python library* )
+- django ( *Python web framework* )
+- coffescript ( *JavaScript wrapper* )
+- html5 boilerplate ( *for unified experience between browsers* )
+- puppet ( *server bootstrap and configuration* )
+- shell in a box ( *local shell access* )
+
+Architecture ( infrastructure )
+-------------------------------
+
+- replicable always on "instructor"
+- routers based on Vyatta ( Cisco like CLI )
+- hosts based on Linux ( well known tooling )
+- IPv6 tunnelling
+
+Architecture ( overview )
+-------------------------
+
+.. image:: images/labs_overview.png
+    :align: center
+    :width: 1600
+
+Experience ( trainer )
+----------------------
+
+- web based "admin portal"
+- labs auto deployable through "admin portal"
+- monitoring of time and progress
+- possibility to hijack user session
+
+Experience ( attendee )
+-----------------------
+
+- single portal ( per attendee )
+- all materials included on portal ( instructions and hints )
+- possibility to interact with trainer ( call for help functionality )
+
+Problems... sure
+----------------
+
+- AWS API instability
+- AWS outages
+- AWS no official IPv6 support
+- multicast unexplained
+
+Future
+------
+
+- multiple labs scenarios
+- other cloud providers
+- local deployment
+- physical hardware hookups
+- attendee registration
+- feedback
+- course reporting
+- webinars
+- build in group chat
+
+Ready For Comments
+------------------
+
+**It's just an idea, help me to make it usable for everyone.**
+

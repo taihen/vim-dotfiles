@@ -1,0 +1,73 @@
+import "classes/*.pp"
+
+$puppetserver = 'puppet.netcube.pl'
+
+node basenode {
+	include packages
+	include motd
+	include ssh
+	include sudo
+	include issue
+	include apticron
+	include resolv
+	include mail-client
+	include ntp
+	include	apt
+	include vim
+	include puppet
+	include denyhosts
+	include timezone
+}
+
+node default inherits basenode {
+    include users
+	include groups
+}
+
+node 'chi.netcube.pl' inherits basenode {
+	include ispconfig::web
+}
+
+node 'bee.taihen.org' inherits basenode {
+    include taihen
+}
+
+node 'crm.paja.pl' inherits basenode {
+	include users
+	include paja
+	include proftpd::basic
+	include apache
+	apache::vhost { 'crm.paja.pl':
+    	port => 80,
+    	docroot => '/var/www/crm.paja.pl',
+    	ssl => true,
+        sslport => 443,
+		priority => 10,
+  	}
+	apache::vhost { 'crm-test.paja.pl':
+    	port => 80,
+    	docroot => '/var/www/crm-test.paja.pl',
+    	ssl => true,
+		sslport => 443,
+		priority => 10,
+  	}
+	apache::module { 'ssl':
+		ensure => present.
+	}
+	apache::module { 'gnutls':
+		ensure => present,
+	}
+	apache::module { 'rewrite':
+		ensure => present,
+	}
+	apache::site { 'crm.paja.pl':
+		ensure => present,
+		priority => 10,
+	}
+	apache::site { 'crm-test.paja.pl':
+		ensure => present,
+		priority => 10,
+	}
+	include php
+    include mysql
+}

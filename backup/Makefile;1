@@ -1,0 +1,11 @@
+default: presentation
+
+presentation:
+	/usr/local/bin/rst2pdf presentation.rst \
+		-o presentation.pdf \
+		-s presentation.style \
+		--fit-background-mode=stretch \
+		-b1
+
+viewpresentation: presentation
+	open presentation.pdf

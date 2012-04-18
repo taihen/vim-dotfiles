@@ -1,0 +1,7 @@
+Version 0.8.4
+
+!fixed regression where top edge of header wouldn't repeat.
+!fixed regression date in header was aligned to the right.
+!changed bullet that is prepended to each message to dynamic content so that it doesn't get copy/pasted.
+!changed space after bullet to non-breaking space so that it never ends up on a line by itself.
+!removed unnecessary html template.

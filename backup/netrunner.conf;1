@@ -1,0 +1,32 @@
+client
+
+dev tap
+; dev tun
+
+# Windows needs the TAP-Win32 adapter name
+# from the Network Connections panel
+# if you have more than one.  On XP SP2,
+# you may need to disable the firewall
+# for the TAP adapter.
+;dev-node MyTap
+
+proto udp
+remote vpn.netrunner.com.pl 8080
+;remote-random
+resolv-retry infinite
+nobind
+
+# Downgrade privileges after initialization (non-Windows only)
+persist-key
+persist-tun
+;mute-replay-warnings
+ca ca.crt
+cert client.crt
+key client.key
+;ns-cert-type server
+;tls-auth ta.key 1
+;cipher x
+comp-lzo
+verb 3
+;mute 20
+
