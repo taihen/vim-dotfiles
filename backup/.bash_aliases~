@@ -1,0 +1,101 @@
+# basic
+# cluster ssh title
+alias cssh='cssh -T Cluster'
+# cal with day numbers
+alias ncal='ncal -j'
+# attention tester
+alias bp='echo -e "\a"'
+# full df
+alias df='df -kTh'
+# get dmesg
+alias dmesg='sudo dmesg'
+# mtr without gui
+alias mtr='sudo mtr -t --curse'
+# attach tmux session
+alias tmux-session='tmux attach-session'
+# highest gzip compression
+alias gzip="gzip -9n"
+
+# debian systems
+alias psc='ps xawf -eo pid,user,cgroup,args'
+alias apt-get='sudo apt-get'
+alias aptitude='sudo aptitude'
+alias reboot='sudo reboot'
+alias shutdown='sudo shutdown'
+alias pm-suspend='sudo pm-suspend'
+alias halt='sudo halt'
+alias mount='sudo mount'
+alias umount='sudo umount'
+
+# directory
+alias gtaihen='cd ~/Projects/taihen'
+alias gpuppet='cd ~/Projects/puppet'
+
+# directory listing
+# detect which `ls` flavor is in use
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+	colorflag="--color"
+else # OS X `ls`
+	colorflag="-G"
+fi
+alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
+
+# git aliases
+alias gp='git push'
+alias gb='git branch'
+alias gc='git checkout'
+alias gm='git commit -m'
+alias gma='git commit -am'
+alias gmad='git commit -am "Empty description"'
+alias gd='git diff'
+alias gs='git status'
+alias gra='git remote add'
+alias grr='git remote rm'
+alias gpu='git pull'
+alias gl='git log'
+alias ga='git add'
+alias gcl='git clone'
+alias gi='git init'
+
+# MacVim from console
+alias vim='/Applications/MacVim.app/Contents/MacOS/Vim -u ~/.vim/vimrc'
+function gvim { /Applications/MacVim.app/Contents/MacOS/Vim -g $*; }
+
+# recursively delete `.DS_Store` files
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+# view HTTP traffic
+alias sniff="sudo ngrep -d 'en0' -t '^(GET|POST)' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i en0 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+
+# update system including homebrew
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade; npm update npm -g; npm update -g'
+
+# IP addresses
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en0"
+alias ips="ifconfig -a | grep -o 'inet6\? \(\([0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+\)\|[a-fA-F0-9:]\+\)' | sed -e 's/inet6* //'"
+
+# enhanced WHOIS lookups
+alias whois="whois -h whois-servers.net"
+alias ripewhois="whois -h whois.ripe.net"
+alias ripewhoistest="whois -h whois-test.ripe.net"
+
+# flush Directory Service cache
+alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+
+# clean up LaunchServices to remove duplicates in the “Open With” menu
+alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
+
+# get OS X Software Updates, and update Homebrew, npm, and their installed packages
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade; npm update npm -g; npm update -g'
+
+# remote servers
+#alias netrunner="AUTOSSH_POLL=10 autossh -M 21010 bee.taihen.org -t 'tmux attach-session -t term'"
+alias netrunner="mosh 85.11.78.78 -- /usr/bin/tmux attach-session -t term"
+#alias im="AUTOSSH_POLL=10 autossh -M 21030 bee.taihen.org -t 'tmux attach-session -t im'"
+alias im="mosh 85.11.78.78 -- /usr/bin/tmux attach-session -t im"
+alias home="AUTOSSH_POLL=10 autossh -M 21040 home.taihen.org -t 'tmux attach-session'"
+alias rock="AUTOSSH_POLL=10 autossh -M 21040 rock -t 'tmux attach-session'"
