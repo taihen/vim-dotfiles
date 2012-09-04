@@ -292,3 +292,10 @@ noremap <leader>ss :call StripWhitespace()<CR>
 " save a file as root (,W) {{{
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 " }}}
+
+" syntastic configuration {{{
+let g:syntastic_check_on_open=1   "syntax checks when buffers are first loaded
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_auto_jump=1   "cursor jump to the first detected error
+" }}}
