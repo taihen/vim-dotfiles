@@ -7,6 +7,9 @@ This is a distribution of vim plugins and tools intended to be run on top of VIM
 	cd ~
 	git clone https://github.com/taihen/vimfiles.git .vim
 	ln -s .vim/vimrc .vimrc
+	cd ~/.vim
+	git submodule sync
+	git submodule update --init --recursive
 
 ##Updating to the latest version:
 
