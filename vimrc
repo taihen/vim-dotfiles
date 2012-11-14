@@ -3,76 +3,45 @@ call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 " }}}
 
-" colorscheme and gui {{{
-filetype plugin on
-filetype indent on
-filetype on
-
-let g:solarized_termcolors=256   "default value is 16
-let g:solarized_contrast="high"   "default value is normal
-let g:solarized_visibility="high"   "default value is normal
-let g:solarized_diffmode="high"   "default value is normal
-syntax enable
-
-if has('gui_running')
-    set background=dark
-    set t_Co=256
-    let g:solarized_termcolors=256
-    highlight SpellBad term=underline gui=undercurl guisp=Orange
-else
-    set background=dark
-    set t_Co=16
-    let g:solarized_termcolors=16
-    let g:CSApprox_loaded=1
-endif
-
-colorscheme solarized
-call togglebg#map(",sol")   "toggle dark/light solarized
-
-set guifont=Inconsolata:h14
-set listchars=tab:▸\ ,trail:◇,extends:»,precedes:«,eol:¬   "textmate a like invisible symbols
-
-au * BufRead norm \   "urgency on slow load
-" }}}
-
 " basic configuration {{{
+set encoding=utf-8
 imap <F6>  # Last change: <C-R>=strftime("%d/%m/%Y %H:%M:%S")<CR>
 nmap <F9> :set paste!<BAR>:set paste?<CR>
 map <F10> <Esc>:setlocal spell spelllang=en_us<CR>
-map <F11> <Esc>:setlocal nospell<CR>
+map <F11> <Esc>:setlocal spell spelllang=pl_PL<CR>
+map <F12> <Esc>:setlocal nospell<CR>
 let mapleader = ","
 nmap <leader>l :set list!<CR>
 au WinLeave * set nocursorline nocursorcolumn
 au WinEnter * set cursorline cursorcolumn
-set modeline   " Allow vim options to be embedded in files;
-set modelines=5   " they must be within the first or last 5 lines.
-set cursorline cursorcolumn   " Highlight current line and column
+set cursorline cursorcolumn " Highlight current line and column
+map <Esc>s :w<CR>
+set pastetoggle=<F7> " Better copy & paste
+set bs=2 " Fix backspace on some environments in INSERT mode
+set modeline " Allow vim options to be embedded in files;
+set modelines=5 " they must be within the first or last 5 lines.
 set guioptions=aegimrLt
-set history=1000
-set number   " Enable line numbers
 set nocompatible   " Make Vim more useful
 set term=builtin_ansi " arrow key navigation
 set showcmd
-set noswapfile " i don't want to recovery
 set foldmethod=marker
 set noexpandtab
 set ignorecase
 set autowrite
 set backup
 set backupdir=~/.vim/backup
+set noswapfile " i don't want to recovery
 set directory=~/.vim/temp
 if exists("&undodir")
 	set undodir=~/.vim/undo
 endif
 set nohidden
-set cursorline
 set autochdir
 set mousehide
 set noerrorbells
 set linespace=0
 set report=0
 set noicon
-set ruler   " Show the cursor position
 set shell=bash
 set showmode   " Show the current mode
 set shortmess=atI   " Don’t show the intro message when starting Vim
@@ -85,35 +54,93 @@ set backspace=indent,eol,start   " Allow backspace in insert mode
 set ttyfast   " Optimize for fast terminal connections
 set binary
 set noeol   " Don’t add empty newlines at the end of files
-set tabstop=2   " Make tabs as wide as two spaces if it's not known file
 set title   " Show the filename in the window titlebar
-let g:SuperTabDefaultCompletionType = "context"  " SuperTab Completion Type
-set completeopt=menuone,longest,preview   "enable the menu and pydoc preview to get the most useful information out of the code completion
+" }}}
+
+" better tab {{{
+set completeopt=menu,menuone,longest " Complete options (disable preview scratch window)
+set pumheight=15 " Limit popup menu height
+let g:SuperTabDefaultCompletionType="context" " SuperTab option for context aware completion
+let g:clang_complete_auto=0 " Disable auto popup, use <Tab> to autocomplete
+let g:clang_complete_copen=1 " Show clang errors in the quickfix window
+" let g:snippets_dir="$HOME/.vim/snipmate-snippets/snippets/"
+" let g:snips_trigger_key='<c-space>' " for testing purposes
+" }}}
+
+" powerline config {{{
+set laststatus=2 " always show status line
+let g:Powerline_colorscheme="solarized16"
+let g:Powerline_symbols="fancy"
+" }}}
+
+" history settings {{{
+set history=1000
+set undolevels=1000
+" }}}
+
+" wrapping long rows {{{
+vmap Q gq
+nmap Q gqap
+" }}}
+
+" show line numbers and line lenght {{{
+set number " show line numbers
+set tw=79 " line width
+set nowrap " do not wrap automatically on load
+set fo-=t " do not wrap automatically when typing
+set colorcolumn=80
+highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
+" }}}
+
+" pymode {{{
+" Disable pylint checking every save
+let g:pymode_lint_write = 0
+" Load show documentation plugin
+let g:pymode_doc = 1
+" Key for show python documentation
+let g:pymode_doc_key = 'K'
+" Load run code plugin
+let g:pymode_run = 1
+" Key for run python code
+let g:pymode_run_key = '<leader>r'
+" Auto fix vim python paths if virtualenv enabled
+let g:pymode_virtualenv = 1
+" Load pylint code plugin
+let g:pymode_lint = 0
+" Load rope plugin
+let g:pymode_rope = 0
+" Enable python folding
+let g:pymode_folding = 1
+" Enable python objects and motion
+let g:pymode_motion = 1
+" Auto fix vim python paths if virtualenv enabled
+let g:pymode_virtualenv = 1
 " }}}
 
 " autocommands for different type of files {{{
 if has("autocmd")
-	autocmd FileType html,css,ruby setlocal ts=2 sts=2 sw=2 expandtab
-	autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noexpandtab
-	autocmd FileType python setlocal ai ts=4 sts=4 et sw=4
-	autocmd FileType python set autoindent
-	autocmd FileType python set smartindent
-	autocmd FileType python set textwidth=79 " PEP-8 Friendly
-	autocmd BufNewFile,BufRead *.rss setfiletype xml
-	autocmd FileType python set omnifunc=pythoncomplete#Complete
-	autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-	autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-	autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-	autocmd BufEnter,BufNew *.note set smartindent foldmethod=indent expandtab tw=0 ts=4 sw=4 spell
-	set ofu=syntaxcomplete#Complete
+  autocmd FileType python setlocal ts=4 sw=4 sta et sts=4 ai
+  autocmd FileType python set autoindent
+  autocmd FileType python set smartindent
+  autocmd FileType python set omnifunc=pythoncomplete#Complete
+	autocmd FileType python let python_highlight_all = 1
+	autocmd FileType python set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+  autocmd FileType python set omnifunc=pythoncomplete#Complete
+	autocmd FileType python inoremap <Nul> <C-x><C-o>
+  autocmd FileType html,css,ruby setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noexpandtab
+  autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+  autocmd BufNewFile,BufRead *.rss setfiletype xml
+  autocmd BufEnter,BufNew *.note set smartindent foldmethod=indent expandtab tw=0 ts=4 sw=4 spell
 endif
 " }}}
 
 " wildmenu settings {{{
-" turn on wild menu :e <Tab>
-set wildmenu
-" set wildmenu to list choice
-set wildmode=longest,list,full
+set wildmenu " turn on wild menu :e <Tab>
+set wildmode=longest,list,full " set wildmenu to list choice
+set wildignore+=*.gif,*.jpg,*.png,tmp,,cache
 " }}}
 
 " buffer diffs indication {{{
@@ -128,6 +155,7 @@ endif
 
 " search settings {{{
 set hlsearch   " Highlight searches
+noremap <silent><Leader>/ :nohls<CR> "remove highlight with ,/
 set incsearch  " Highlight dynamically as pattern is typed
 set showmatch
 set ignorecase   " Ignore case of searches
@@ -143,11 +171,26 @@ if has('mouse')
 endif
 " }}}
 
-" browser alike tab navigation {{{
-nnoremap <silent> <C-Right> :tabnext<CR>
-nnoremap <silent> <C-Left> :tabprevious<CR>
-nnoremap <silent> <C-t> :tabnew<CR>
-nnoremap <silent> <C-x> :tabclose<CR>
+" tab settings and navigation {{{
+map <Leader>t <esc>:tabnew<CR>
+map <Leader>x <esc>:tabclose<CR>
+map <Leader>n <esc>:tabprevious<CR>
+map <Leader>m <esc>:tabnext<CR>
+set tabstop=2   " Make tabs as wide as two spaces if it's not known file
+" }}}
+
+" Highlight trailing whitespace in vim on non empty lines, but not while {{{
+" typing in insert mode!
+highlight ExtraWhitespace ctermbg=red guibg=brown
+au ColorScheme * highlight ExtraWhitespace guibg=red
+au BufEnter * match ExtraWhitespace /\S\zs\s\+$/
+au InsertEnter * match ExtraWhitespace /\S\zs\s\+\%#\@<!$/
+au InsertLeave * match ExtraWhiteSpace /\S\zs\s\+$/
+" }}}
+
+" moving block of code {{{
+vnoremap < <gv
+vnoremap > >gv
 " }}}
 
 " tabularize mappings {{{
@@ -156,7 +199,7 @@ if exists(":Tabularize")
   nmap <Leader>a= :Tabularize /=<CR>
   vmap <Leader>a= :Tabularize /=<CR>
   nmap <Leader>a> :Tabularize /=><CR>
-  vmap <Leader>a> :Tabularize /><CR>
+  vmap <Leader>a> :Tabularize /=><CR>
   nmap <Leader>a: :Tabularize /:\zs<CR>
   vmap <Leader>a: :Tabularize /:\zs<CR>
 endif
@@ -213,9 +256,9 @@ autocmd FileType * exec('set dictionary+=~/.vim/spell/' . &filetype)
 " }}}
 
 " par formating {{{
-:set formatprg=par\ -w60
-:map <A-q> {v}!par -jw60<CR>
-:vmap <A-q> !par -jw60<CR>
+set formatprg=par\ -w60
+map <A-q> {v}!par -jw60<CR>
+vmap <A-q> !par -jw60<CR>
 nnoremap <leader>par :%s/^>$//<CR>
 " }}}
 
@@ -243,41 +286,6 @@ let g:pep8_map='<leader>8'
 map <F8> <ESC>:/^[ ]*> -- *$/;?^[ >][ >]*$?;.,/^[ ]*$/-1d<CR>
 " }}}
 
-" statusline configuration and changes colors based on mode {{{
-set laststatus=2            " Always show statusline, even if only 1 window.
-
-function! InsertStatuslineColor(mode)
-  if a:mode == 'i'
-    hi statusline guibg=Cyan ctermfg=2 guifg=Black ctermbg=0
-  elseif a:mode == 'r'
-    hi statusline guibg=Purple ctermfg=5 guifg=Black ctermbg=0
-  else
-    hi statusline guibg=DarkRed ctermfg=1 guifg=Black ctermbg=0
-  endif
-endfunction
-
-au InsertEnter * call InsertStatuslineColor(v:insertmode)
-au InsertLeave * hi statusline guibg=DarkGrey ctermfg=8 guifg=White ctermbg=15
-
-" default the statusline to green when entering Vim
-hi statusline guibg=DarkGrey ctermfg=8 guifg=White ctermbg=15
-
-" Formats the statusline
-set statusline=%f                           	" file name
-set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
-set statusline+=%{&ff}] 			"file format
-set statusline+=%y      			"filetype
-set statusline+=%h      			"help file flag
-set statusline+=%m      			"modified flag
-set statusline+=%r      			"read only flag
-set statusline+=%{fugitive#statusline()} 	" git info
-set statusline+=\ %=                        	" align left
-set statusline+=Line:%l/%L[%p%%]            	" line X of Y [percent of file]
-set statusline+=\ Col:%c                    	" current column
-set statusline+=\ Buf:%n                    	" Buffer number
-set statusline+=\ [%b][0x%B]\               	" ASCII and byte code under cursor
-" }}}
-
 " strip trailing whitespace (,ss) {{{
 function! StripWhitespace()
 	let save_cursor = getpos(".")
@@ -298,4 +306,32 @@ let g:syntastic_check_on_open=1   "syntax checks when buffers are first loaded
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_auto_jump=1   "cursor jump to the first detected error
+" }}}
+
+" colorscheme and gui {{{
+filetype plugin on
+filetype indent on
+filetype on
+set ofu=syntaxcomplete#Complete " enable completion for any code
+let g:solarized_contrast="high"   "default value is normal
+let g:solarized_visibility="high"   "default value is normal
+let g:solarized_diffmode="high"   "default value is normal
+let g:solarized_termtrans = 1
+syntax enable
+set background=dark
+colorscheme solarized
+
+if has('gui_running')
+    let g:solarized_termcolors=256
+    set t_Co=256
+    highlight SpellBad term=underline gui=undercurl guisp=Orange
+else
+    let g:solarized_termcolors=256
+    set t_Co=256
+    "let g:CSApprox_loaded=1
+endif
+
+call togglebg#map(",sol")   "toggle dark/light solarized
+set listchars=tab:▸\ ,trail:◇,extends:»,precedes:«,eol:¬   "textmate a like invisible symbols
+au * BufRead norm \   "urgency on slow load
 " }}}
