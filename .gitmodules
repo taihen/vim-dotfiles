@@ -58,3 +58,6 @@
 [submodule "snipmate-snippets"]
 	path = snipmate-snippets
 	url = https://github.com/honza/snipmate-snippets.git
+[submodule "bundle/jedi-vim"]
+	path = bundle/jedi-vim
+	url = https://github.com/davidhalter/jedi-vim.git
