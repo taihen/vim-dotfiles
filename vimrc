@@ -7,8 +7,8 @@ call pathogen#helptags()
 set encoding=utf-8
 imap <F6>  # Last change: <C-R>=strftime("%d/%m/%Y %H:%M:%S")<CR>
 nmap <F9> :set paste!<BAR>:set paste?<CR>
-map <F10> <Esc>:setlocal spell spelllang=en_us<CR>
-map <F11> <Esc>:setlocal spell spelllang=pl_PL<CR>
+map <F10> <Esc>:setlocal spell spelllang=en<CR>
+map <F11> <Esc>:setlocal spell spelllang=pl<CR>
 map <F12> <Esc>:setlocal nospell<CR>
 let mapleader = ","
 nmap <leader>l :set list!<CR>
@@ -253,6 +253,7 @@ augroup END
 " load dictionary files for complete suggestion (CTRL-n) {{{
 set complete+=k
 autocmd FileType * exec('set dictionary+=~/.vim/spell/' . &filetype)
+set spelllang=en,pl
 " }}}
 
 " par formating {{{
