@@ -88,7 +88,7 @@ set number " show line numbers
 set tw=79 " line width
 set nowrap " do not wrap automatically on load
 set fo-=t " do not wrap automatically when typing
-set colorcolumn=80
+"set colorcolumn=80
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 " }}}
 
