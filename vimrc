@@ -67,10 +67,10 @@ let g:clang_complete_copen=1 " Show clang errors in the quickfix window
 " let g:snips_trigger_key='<c-space>' " for testing purposes
 " }}}
 
-" powerline config {{{
-set laststatus=2 " always show status line
-let g:Powerline_colorscheme="solarized16"
-let g:Powerline_symbols="fancy"
+" airline tabconfig {{{
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='gruvbox'
 " }}}
 
 " history settings {{{
@@ -129,6 +129,7 @@ if has("autocmd")
 	autocmd FileType python inoremap <Nul> <C-x><C-o>
   autocmd FileType html,css,ruby setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noexpandtab
+  autocmd FileType xml setlocal ts=4 sts=4 sw=4 expandtab
   autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
   autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
   autocmd FileType css set omnifunc=csscomplete#CompleteCSS
@@ -186,6 +187,7 @@ au ColorScheme * highlight ExtraWhitespace guibg=red
 au BufEnter * match ExtraWhitespace /\S\zs\s\+$/
 au InsertEnter * match ExtraWhitespace /\S\zs\s\+\%#\@<!$/
 au InsertLeave * match ExtraWhiteSpace /\S\zs\s\+$/
+
 " }}}
 
 " moving block of code {{{
@@ -268,7 +270,14 @@ let NERDTreeChDirMode=2
 let NERDTreeIgnore=['\.vim$', '\~$', '\.pyc$', '\.swp$']
 let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\~$']
 let NERDTreeShowBookmarks=1
-map <F3> :NERDTreeToggle<CR>
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let NERDTreeWinPos = "left"
+let NERDTreeQuitOnOpen = 1
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+nnoremap <silent> <Leader>d :NERDTreeFind<CR>
+nnoremap <Leader>f :NERDTreeToggle<Enter>
 " }}}
 
 " gundo config (F2) {{{
@@ -306,7 +315,8 @@ noremap <leader>W :w !sudo tee % > /dev/null<CR>
 let g:syntastic_check_on_open=1   "syntax checks when buffers are first loaded
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
-let g:syntastic_auto_jump=1   "cursor jump to the first detected error
+let g:syntastic_auto_jump=0   "cursor jump to the first detected error
+let g:syntastic_yaml_checkers = ['yamllint']   "yaml validation with yamllist
 " }}}
 
 " colorscheme and gui {{{
@@ -314,13 +324,17 @@ filetype plugin on
 filetype indent on
 filetype on
 set ofu=syntaxcomplete#Complete " enable completion for any code
-let g:solarized_contrast="high"   "default value is normal
-let g:solarized_visibility="high"   "default value is normal
-let g:solarized_diffmode="high"   "default value is normal
-let g:solarized_termtrans = 1
+" let g:solarized_contrast="high"   "default value is normal
+" let g:solarized_visibility="high"   "default value is normal
+" let g:solarized_diffmode="high"   "default value is normal
+" let g:solarized_termtrans = 1
 syntax enable
 set background=dark
-colorscheme solarized
+" colorscheme solarized
+" colorscheme monokai
+" colorscheme jellybeans
+colorscheme gruvbox
+" colorscheme molokai_dark
 
 if has('gui_running')
     let g:solarized_termcolors=256
@@ -333,6 +347,13 @@ else
 endif
 
 call togglebg#map(",sol")   "toggle dark/light solarized
-set listchars=tab:▸\ ,trail:◇,extends:»,precedes:«,eol:¬   "textmate a like invisible symbols
+set listchars=tab:▸\ ,trail:◇,extends:»,precedes:«,eol:¬,space:·   "textmate a like invisible symbols
 au * BufRead norm \   "urgency on slow load
+" }}}
+"
+" rainbox partheses {{{
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 " }}}

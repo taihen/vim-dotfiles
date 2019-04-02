@@ -61,3 +61,25 @@
 [submodule "bundle/jedi-vim"]
 	path = bundle/jedi-vim
 	url = https://github.com/davidhalter/jedi-vim.git
+[submodule "bundle/vim-kubernetes"]
+	path = bundle/vim-kubernetes
+	url = https://github.com/andrewstuart/vim-kubernetes.git
+[submodule "bundle/yaml-vim"]
+	path = bundle/yaml-vim
+	url = https://github.com/mrk21/yaml-vim.git
+[submodule "bundle/vim-airline"]
+	path = bundle/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
+[submodule "bundle/vim-airline-themes"]
+	path = bundle/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes.git
+[submodule "bundle/rainbox_parentheses"]
+	path = bundle/rainbox_parentheses
+	url = https://github.com/kien/rainbow_parentheses.vim.git
+[submodule "bundle/colorschemes"]
+	path = /home/taihen/.vim/bundle/colorschemes
+	url = https://github.com/flazz/vim-colorschemes.git
+
+[submodule "bundle/gruvbox"]
+	path = bundle/gruvbox
+	url = https://github.com/morhetz/gruvbox.git
