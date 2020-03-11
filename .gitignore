@@ -1,1 +1,4 @@
 .netrwhist
+.templates
+templates*
+*.swp

@@ -1,0 +1,10 @@
+set nocompatible
+filetype plugin on
+syntax on
+set runtimepath+=~/.vim/bundle/vimwiki
+let wiki = {}
+let wiki.path = '~/vimwiki'
+let wiki.path_html = '~/vimwiki/html'
+let wiki.syntax = 'markdown'
+let wiki.ext = '.wiki'
+let g:vimwiki_list = [wiki]
